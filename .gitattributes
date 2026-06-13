@@ -1,0 +1,14 @@
+# Default: normalize to LF in repo, checkout as-is
+* text=auto eol=lf
+
+# Shell scripts must always have LF (run on Linux)
+*.sh text eol=lf
+
+# Windows-native files can use CRLF
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+
+# Binary files — no line-ending conversion
+*.png binary
+*.jpg binary
+*.gz  binary

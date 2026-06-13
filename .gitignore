@@ -1,0 +1,30 @@
+# ── Секреты ───────────────────────────────────────────────────────────────────
+.env
+
+# ── Claude Code контекст ──────────────────────────────────────────────────────
+CLAUDE.md
+
+# ── Временные скрипты разработки ─────────────────────────────────────────────
+tmp/
+
+# ── Устаревшие патч-скрипты Euro-Office ──────────────────────────────────────
+# Заменены на euro-office/entrypoint.sh + euro-office/Dockerfile
+euro-office/patch_ep_final.py
+euro-office/patch_ep_wopi_enable.py
+euro-office/fix_genrsa_traditional.py
+euro-office/fix_jq_dollar.py
+euro-office/fix_key_newlines.py
+euro-office/fix_migration_traditional.py
+euro-office/test_wopi_keys.sh
+
+# ── Заменённые документы ──────────────────────────────────────────────────────
+# Valkey не удалось установить (репозиторий недоступен), используется Redis 7
+docs/03_valkey.md
+
+# ── OS / IDE ──────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
