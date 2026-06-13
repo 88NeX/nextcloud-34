@@ -71,7 +71,7 @@ docker run -d --name euro-office --restart unless-stopped \
   --add-host=nextcloud.lan:192.168.88.10 \
   --add-host=eurooffice.lan:192.168.88.10 \
   -v /opt/euro-office/logs:/var/log/euro-office \
-  -v /opt/euro-office/data:/var/www/onlyoffice/Data \
+  -v /opt/euro-office/data:/var/www/euro-office/Data \
   euro-office-patched:local
 ```
 
@@ -207,7 +207,7 @@ pct exec 204 -- docker run -d --name euro-office --restart unless-stopped \
   --add-host=nextcloud.lan:192.168.88.10 \
   --add-host=eurooffice.lan:192.168.88.10 \
   -v /opt/euro-office/logs:/var/log/euro-office \
-  -v /opt/euro-office/data:/var/www/onlyoffice/Data \
+  -v /opt/euro-office/data:/var/www/euro-office/Data \
   euro-office-patched:local
 ```
 
@@ -239,7 +239,7 @@ services:
     volumes:
       - ./entrypoint.sh:/entrypoint-patched.sh:ro
       - /opt/euro-office/logs:/var/log/euro-office
-      - /opt/euro-office/data:/var/www/onlyoffice/Data
+      - /opt/euro-office/data:/var/www/euro-office/Data
 ```
 
 ```bash
@@ -610,7 +610,7 @@ else:
 
 ```bash
 # Посмотреть первую строку ключа внутри контейнера
-docker exec euro-office head -1 /var/www/onlyoffice/Data/certs/wopi-private.key
+docker exec euro-office head -1 /var/www/euro-office/Data/certs/wopi-private.key
 
 # Должно быть:
 #   -----BEGIN RSA PRIVATE KEY-----   (PKCS#1 — правильно)

@@ -49,17 +49,42 @@ cp .env.example .env
 Обязательно сменить: `POSTGRES_PASSWORD`, `REDIS_PASSWORD`, `NEXTCLOUD_ADMIN_PASSWORD`, `JWT_SECRET`.  
 Для `JWT_SECRET` используйте: `openssl rand -hex 32`
 
-### 2. Сборка образа Euro-Office
+### 2. Сборка и запуск Euro-Office с patched entrypoint.sh
+
+Два варианта доставки патча — подробно в [EURO_OFFICE_WOPI.md §3.3](EURO_OFFICE_WOPI.md#33-как-доставить-patched-entrypointsh-в-контейнер).
+
+**Вариант 1 (рекомендуется): Dockerfile — патч зашит в образ**
 
 ```bash
 # Копируем на Proxmox
 scp -i ~/.ssh/proxyid_ed25519 euro-office/entrypoint.sh root@192.168.88.144:/tmp/entrypoint.sh
 scp -i ~/.ssh/proxyid_ed25519 euro-office/Dockerfile    root@192.168.88.144:/tmp/Dockerfile
 
-# Собираем внутри CT 204
+# Доставляем в CT 204 и собираем образ
 pct push 204 /tmp/entrypoint.sh /tmp/build/entrypoint.sh
 pct push 204 /tmp/Dockerfile    /tmp/build/Dockerfile
 pct exec 204 -- docker build -t euro-office-patched:local /tmp/build/
+```
+
+**Вариант 2: volume mount — патч без пересборки образа**
+
+```bash
+# Доставляем entrypoint.sh и docker-compose.yml в CT 204
+scp -i ~/.ssh/proxyid_ed25519 euro-office/entrypoint.sh root@192.168.88.144:/tmp/entrypoint.sh
+scp -i ~/.ssh/proxyid_ed25519 docker-compose.yml        root@192.168.88.144:/tmp/docker-compose.yml
+
+pct push 204 /tmp/entrypoint.sh    /opt/euro-office/entrypoint.sh
+pct push 204 /tmp/docker-compose.yml /opt/euro-office/docker-compose.yml
+
+# Запуск (entrypoint монтируется под другим именем — иначе Docker снимает execute bit)
+pct exec 204 -- bash -c "cd /opt/euro-office && docker compose up -d"
+```
+
+Соответствующий блок в `docker-compose.yml`:
+```yaml
+entrypoint: ["/entrypoint-patched.sh"]
+volumes:
+  - ./entrypoint.sh:/entrypoint-patched.sh:ro
 ```
 
 ### 3. Запуск Euro-Office
