@@ -584,8 +584,8 @@ docker run -d --name euro-office \
   -e JWT_SECRET=a928fb82f23ed6c536e67b8b5019f093af7b3a2bafda7618606798259cc65e35 \
   -e JWT_HEADER=AuthorizationJwt \
   -e WOPI_ENABLED=true \
-  -v /opt/euro-office/logs:/var/log/onlyoffice \
-  -v /opt/euro-office/data:/var/www/onlyoffice/Data \
+  -v /opt/euro-office/logs:/var/log/euro-office \
+  -v /opt/euro-office/data:/var/www/euro-office/Data \
   ghcr.io/euro-office/documentserver:latest
 
 # [VM-204] Ждём ~30 секунд, проверяем запуск.
@@ -711,8 +711,8 @@ docker run -d --name euro-office \
   -e WOPI_ENABLED=true \
   --add-host=nextcloud.lan:192.168.88.10 \
   --add-host=eurooffice.lan:192.168.88.10 \
-  -v /opt/euro-office/logs:/var/log/onlyoffice \
-  -v /opt/euro-office/data:/var/www/onlyoffice/Data \
+  -v /opt/euro-office/logs:/var/log/euro-office \
+  -v /opt/euro-office/data:/var/www/euro-office/Data \
   euro-office-patched:local
 ```
 
